@@ -23,8 +23,6 @@ function App() {
           Learn React
         </a>
         <button onClick={handleClick}>Click me</button>
-        <button onClick={handleClick}>Click me too</button>
-        <button onClick={handleClick}>Click me three</button>
       </header>
     </div>
   );
