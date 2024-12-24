@@ -1,20 +1,25 @@
-# pull official base image
-FROM node:lts-alpine
+# Build stage
+FROM node:lts-alpine as build
 
-# set working directory
 WORKDIR /app
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+# Install dependencies
+COPY package*.json ./
+RUN npm install
 
-# install app dependencies
-COPY package.json ./
-COPY package-lock.json ./
-RUN npm install --silent
-RUN npm install react-scripts@latest -g --silent
+# Build the app
+COPY . .
+RUN npm run build
 
-# add app
-COPY . ./
+# Production stage
+FROM nginx:alpine
 
-# start app
-CMD ["npm", "start"]
+# Copy built assets from build stage
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Add nginx config
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
