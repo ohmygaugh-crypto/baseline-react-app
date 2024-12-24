@@ -3,7 +3,8 @@ import './App.css';
 
 function App() {
   // Define handleClick function
-  const handleClick = () => {
+  const handleClick = (event) => {
+    event.preventDefault(); // Prevent default browser behavior
     console.log('Button clicked!');
   };
 
