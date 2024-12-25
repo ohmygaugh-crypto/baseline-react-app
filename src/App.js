@@ -1,12 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
+import React from 'react';
 
 function App() {
-  // Define handleClick function
-  const handleClick = (event) => {
-    event.preventDefault(); // Prevent default browser behavior
+  const handleClick = React.useCallback((event) => {
+    event.preventDefault();
     console.log('Button clicked!');
-  };
+  }, []);
 
   return (
     <div className="App">
